@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en-US">
 
 <head>
@@ -12,25 +12,21 @@
 			max-width: 100% !important;
 		}
 	</style>
-	<meta name='roboFts' content='noindex, nofollow'>
-	<link rel="canonical" href="index.htm">
+	<meta name='robots' content='index, follow'>
+	<link rel="canonical" href="https://kirimdigi.github.io/Melisa-Deny/">
 	<meta name="description" content="Hadiri acara pernikahan kami, Ahad 02 Agustus 2026 Ya!">
-	<meta property="og:title" content="Website Invitation Premium">
-	<meta property="og:type" content="article">
-	<meta property="og:image" content="https://webinvite.id/wp-content/uploads/2025/08/FAIRYTALE-web.jpg">
-	<meta property="og:image:width" content="784">
-	<meta property="og:image:height" content="784">
-	<meta property="og:image:alt" content="Fairytale web">
+	<meta property="og:title" content="Melisa 💙 Deny">
+	<meta property="og:type" content="website">
+	<meta property="og:image" content="https://kirimdigi.github.io/Melisa-Deny/Foto-Video-Compressed/3.jpeg">
+	<meta property="og:image:width" content="1024">
+	<meta property="og:image:height" content="1024">
+	<meta property="og:image:alt" content="Melisa Deny">
 	<meta property="og:description" content="Hadiri acara pernikahan kami, Ahad 02 Agustus 2026 Ya!">
-	<meta property="og:url" content="https://webinvite.id/fairytale/">
-	<meta property="og:locale" content="en_US">
-	<meta property="og:site_name" content="Web Invite">
-	<meta property="article:published_time" content="2025-08-19T10:38:18+07:00">
-	<meta property="article:modified_time" content="2026-02-09T14:24:49+07:00">
-	<meta property="og:updated_time" content="2026-02-09T14:24:49+07:00">
-	<meta property="article:section" content="Uncategorized">
+	<meta property="og:url" content="https://kirimdigi.github.io/Melisa-Deny/">
+	<meta property="og:locale" content="id_ID">
+	<meta property="og:site_name" content="Melisa 💙 Deny">
 	<meta name="twitter:card" content="summary_large_image">
-	<meta name="twitter:image" content="https://webinvite.id/wp-content/uploads/2025/08/FAIRYTALE-web.jpg">
+	<meta name="twitter:image" content="https://kirimdigi.github.io/Melisa-Deny/Foto-Video-Compressed/3.jpeg">
 	<meta name="author" content="SuperAdmin">
 	<meta name="date" content="2025-08-19T10:38:18+07:00">
 	<link rel='dns-prefetch' href='//unpkg.com'>
@@ -3570,7 +3566,28 @@
 												<script
 													type="text/javascript">if (jQuery('.namatamu').length >= 1) {
 															let tmpHtmlNamatamu = document.querySelectorAll('.namatamu')
-															tmpHtmlNamatamu.forEach((tamuTexts) => { tamuTexts.innerHTML = cleanIts(tamuTexts.innerHTML) })
+															let toParam = '';
+															const urlParams = new URLSearchParams(window.location.search);
+															if (urlParams.has('to')) {
+																toParam = urlParams.get('to');
+															} else if (window.location.hash) {
+																const hash = window.location.hash.substring(1);
+																const hashParams = new URLSearchParams(hash);
+																if (hashParams.has('to')) {
+																	toParam = hashParams.get('to');
+																} else {
+																	const match = hash.match(/to=(.*)/);
+																	if (match) {
+																		toParam = decodeURIComponent(match[1]);
+																	}
+																}
+															}
+															tmpHtmlNamatamu.forEach((tamuTexts) => {
+																if (toParam) {
+																	tamuTexts.textContent = toParam;
+																}
+																tamuTexts.innerHTML = cleanIts(tamuTexts.innerHTML)
+															})
 														}
 														function cleanIts(str) { return jQuery("<textarea></textarea>").html(str.replace(/\\/g, "")).text() }</script>
 												<style type="text/css">
