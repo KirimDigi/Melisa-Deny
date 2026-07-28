@@ -2890,33 +2890,79 @@
 												<div id="toastRsvp" class="toast-rsvp">Terima kasih! Ucapan berhasil
 													dikirim.</div>
 												<script>
-													var GURL = 'https://script.google.com/macros/s/AKfycbyaE_FLRbnoMWR9M5eu6q3sgoa0ASrd0RT5FBqf8zuGSo9ZLjurIOF-AbO97RDS2Sj-CA/exec';
+					var GURL = 'https://script.google.com/macros/s/AKfycbyaE_FLRbnoMWR9M5eu6q3sgoa0ASrd0RT5FBqf8zuGSo9ZLjurIOF-AbO97RDS2Sj-CA/exec';
+					var SHEET_ID = '13UOL0Fx_nRTv-DipS0XggIP9J_Pr31a3dDpEx0hU5Zw';
+					var GVIZ_URL = 'https://docs.google.com/spreadsheets/d/' + SHEET_ID + '/gviz/tq?tqx=out:json&gid=0';
 
-													function loadComments() {
-														var list = document.getElementById('cui-container-comment-55234');
-														list.innerHTML = '<li class="cui-item-comment" style="text-align:center;color:#999;padding:20px;list-style:none;">Memuat ucapan...</li>';
-														fetch(GURL).then(function (r) { return r.json(); }).then(function (data) {
-															list.innerHTML = '';
-															var hadir = 0, tidak = 0;
-															if (data && data.length) {
-																data.slice().reverse().forEach(function (item) {
-																	if (item.kehadiran === 'Hadir') hadir++;
-																	else if (item.kehadiran === 'Tidak Hadir' || item.kehadiran === 'Tidak hadir') tidak++;
-																	var li = document.createElement('li');
-																	li.className = 'cui-item-comment';
-																	var initial = item.nama ? item.nama.charAt(0).toUpperCase() : '?';
-																	var timeHtml = item.timestamp ? '<span class="gsheet-time">\u2022 ' + item.timestamp + '</span>' : '';
-																	li.innerHTML = '<div class="cui-comment-avatar" style="float:left;width:28px;height:28px;border-radius:50%;background:#d4a373;color:#fff;text-align:center;line-height:28px;font-size:14px;font-weight:bold;">' + initial + '</div><div class="cui-comment-content" style="margin-left:38px;"><div class="cui-comment-meta"><strong style="color:#111;font-weight:bold;">' + (item.nama || '') + '</strong> <span style="font-size:11px;color:#222;font-weight:bold;margin-left:4px;">(' + (item.kehadiran || '') + ')</span>' + timeHtml + '</div><p style="margin:4px 0 8px;font-size:13px;color:#222;font-weight:500;line-height:1.4;">' + (item.ucapan || '') + '</p></div><div style="clear:both;"></div>';
-																	list.appendChild(li);
-																});
-															} else {
-																list.innerHTML = '<li class="cui-item-comment" style="text-align:center;color:#999;padding:20px;list-style:none;">Belum ada ucapan.</li>';
-															}
-															document.getElementById('invitation-count-55234').innerHTML = '<div class="cui_comment_count_card_row"><div class="cui_comment_count_card cui_card-hadir"><span>' + hadir + '</span><span>Hadir</span></div><div class="cui_comment_count_card cui_card-tidak_hadir"><span>' + tidak + '</span><span>Tidak Hadir</span></div></div>';
-														}).catch(function () {
-															list.innerHTML = '<li class="cui-item-comment" style="text-align:center;color:#999;padding:20px;list-style:none;">Gagal memuat ucapan.</li>';
-														});
-													}
+					function renderComments(rows) {
+						var list = document.getElementById('cui-container-comment-55234');
+						list.innerHTML = '';
+						var hadir = 0, tidak = 0;
+						if (rows && rows.length) {
+							rows.slice().reverse().forEach(function (row) {
+								/* Kolom: A=timestamp, B=nama, C=kehadiran, D=ucapan */
+								var timestamp = row.c && row.c[0] && row.c[0].v ? row.c[0].v : '';
+								var nama      = row.c && row.c[1] && row.c[1].v ? row.c[1].v : '';
+								var kehadiran = row.c && row.c[2] && row.c[2].v ? row.c[2].v : '';
+								var ucapan    = row.c && row.c[3] && row.c[3].v ? row.c[3].v : '';
+								if (kehadiran === 'Hadir') hadir++;
+								else if (kehadiran === 'Tidak Hadir' || kehadiran === 'Tidak hadir') tidak++;
+								var li = document.createElement('li');
+								li.className = 'cui-item-comment';
+								var initial = nama ? nama.charAt(0).toUpperCase() : '?';
+								var timeHtml = timestamp ? '<span class="gsheet-time">\u2022 ' + timestamp + '</span>' : '';
+								/* Escape HTML untuk keamanan */
+								var safeName = nama.replace(/</g,'&lt;').replace(/>/g,'&gt;');
+								var safeUcapan = ucapan.replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
+								li.innerHTML = '<div class="cui-comment-avatar" style="float:left;width:28px;height:28px;border-radius:50%;background:#d4a373;color:#fff;text-align:center;line-height:28px;font-size:14px;font-weight:bold;">' + initial + '</div><div class="cui-comment-content" style="margin-left:38px;"><div class="cui-comment-meta"><strong style="color:#111;font-weight:bold;">' + safeName + '</strong> <span style="font-size:11px;color:#222;font-weight:bold;margin-left:4px;">(' + kehadiran + ')</span>' + timeHtml + '</div><p style="margin:4px 0 8px;font-size:13px;color:#222;font-weight:500;line-height:1.4;">' + safeUcapan + '</p></div><div style="clear:both;"></div>';
+								list.appendChild(li);
+							});
+						} else {
+							list.innerHTML = '<li class="cui-item-comment" style="text-align:center;color:#999;padding:20px;list-style:none;">Belum ada ucapan.</li>';
+						}
+						document.getElementById('invitation-count-55234').innerHTML = '<div class="cui_comment_count_card_row"><div class="cui_comment_count_card cui_card-hadir"><span>' + hadir + '</span><span>Hadir</span></div><div class="cui_comment_count_card cui_card-tidak_hadir"><span>' + tidak + '</span><span>Tidak Hadir</span></div></div>';
+					}
+
+					function loadComments() {
+						var list = document.getElementById('cui-container-comment-55234');
+						list.innerHTML = '<li class="cui-item-comment" style="text-align:center;color:#999;padding:20px;list-style:none;">Memuat ucapan...</li>';
+
+						/* Coba baca langsung dari Google Sheets via GViz API (tanpa backend) */
+						fetch(GVIZ_URL)
+							.then(function (r) { return r.text(); })
+							.then(function (text) {
+								/* GViz format: google.visualization.Query.setResponse({...}); */
+								var match = text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*)\)\s*;?\s*$/);
+								if (!match) throw new Error('GViz parse error');
+								var json = JSON.parse(match[1]);
+								if (json.status !== 'ok' || !json.table) throw new Error('GViz status error');
+								renderComments(json.table.rows || []);
+							})
+							.catch(function () {
+								/* Fallback ke Apps Script */
+								fetch(GURL)
+									.then(function (r) { return r.json(); })
+									.then(function (data) {
+										if (data && data.length) {
+											/* Konversi format Apps Script ke format GViz rows */
+											var rows = data.map(function(item) {
+												return { c: [
+													{v: item.timestamp || ''},
+													{v: item.nama || ''},
+													{v: item.kehadiran || ''},
+													{v: item.ucapan || ''}
+												]};
+											});
+											renderComments(rows);
+										} else {
+											renderComments([]);
+										}
+									})
+									.catch(function () {
+										list.innerHTML = '<li class="cui-item-comment" style="text-align:center;color:#999;padding:20px;list-style:none;">Gagal memuat ucapan. Periksa koneksi internet Anda.</li>';
+									});
+							});
+					}
 
 													document.getElementById('commentform-55234').addEventListener('submit', function (e) {
 														e.preventDefault();
