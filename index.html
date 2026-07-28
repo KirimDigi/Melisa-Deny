@@ -1166,6 +1166,215 @@
 		}
 	</style>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+	<style>
+		/* ============================================================
+		   FIX GALLERY FOTO: CSS Variables dari Elementor JS tidak jalan,
+		   sehingga e-gallery-image tidak punya tinggi (padding-bottom: 0)
+		   ============================================================ */
+
+		/* Gallery "Our Gallery" - grid 2 kolom, rasio 9:16 (portrait) */
+		.elementor-element-b6f6ff8 .elementor-gallery__container {
+			display: grid !important;
+			grid-template-columns: repeat(2, 1fr) !important;
+			gap: 4px !important;
+		}
+		.elementor-element-b6f6ff8 .e-gallery-item {
+			display: block !important;
+			opacity: 1 !important;
+			visibility: visible !important;
+		}
+		.elementor-element-b6f6ff8 .e-gallery-image {
+			padding-bottom: 177.78% !important; /* rasio 9:16 */
+			background-size: cover !important;
+			background-position: center !important;
+			display: block !important;
+		}
+
+		/* Gallery "Wedding Hashtag" - grid 1 kolom, rasio 1:1 */
+		.elementor-element-8540e43 .elementor-gallery__container {
+			display: grid !important;
+			grid-template-columns: 1fr !important;
+			gap: 0 !important;
+		}
+		.elementor-element-8540e43 .e-gallery-item {
+			display: block !important;
+			opacity: 1 !important;
+			visibility: visible !important;
+		}
+		.elementor-element-8540e43 .e-gallery-image {
+			padding-bottom: 100% !important; /* rasio 1:1 */
+			background-size: cover !important;
+			background-position: center !important;
+			display: block !important;
+		}
+
+		/* Semua gallery images: pastikan background muncul */
+		.e-gallery-image {
+			position: relative !important;
+			width: 100% !important;
+			background-size: cover !important;
+			background-position: center !important;
+			background-repeat: no-repeat !important;
+		}
+
+		/* e-gallery-item: pastikan selalu terlihat */
+		.e-gallery-item {
+			opacity: 1 !important;
+			visibility: visible !important;
+			display: block !important;
+		}
+
+		/* Fix YouTube video iframe di Our Gallery */
+		.elementor-element-c003900 .elementor-video iframe {
+			width: 100% !important;
+			height: 300px !important;
+			display: block !important;
+		}
+
+		/* ============================================================
+		   FIX CAROUSEL FOTO DI BAWAH COUNTDOWN
+		   (elementor-element-0d2140a) - 3 foto terlihat, auto-slide 2 detik
+		   ============================================================ */
+		.elementor-element-0d2140a .elementor-swiper {
+			overflow: hidden !important;
+			width: 100% !important;
+		}
+		.elementor-element-0d2140a .elementor-main-swiper {
+			overflow: hidden !important;
+			width: 100% !important;
+		}
+		.elementor-element-0d2140a .swiper-wrapper {
+			display: flex !important;
+			flex-wrap: nowrap !important;
+			width: 100% !important;
+			transition: transform 0.5s ease-in-out;
+			transform: translate3d(0, 0, 0);
+			scrollbar-width: none !important;
+			-ms-overflow-style: none !important;
+		}
+		.elementor-element-0d2140a .swiper-wrapper::-webkit-scrollbar {
+			display: none !important;
+		}
+		.elementor-element-0d2140a .swiper-slide {
+			flex: 0 0 calc(33.333% - 3px) !important;
+			min-width: calc(33.333% - 3px) !important;
+			width: calc(33.333% - 3px) !important;
+			margin-right: 4px !important;
+		}
+		.elementor-element-0d2140a .elementor-carousel-image {
+			background-size: cover !important;
+			background-position: center !important;
+			padding-bottom: 100% !important;
+			width: 100% !important;
+			display: block !important;
+			border-radius: 6px !important;
+		}
+
+		/* elementor-invisible override - show all hidden elements */
+		.elementor-invisible {
+			opacity: 1 !important;
+			visibility: visible !important;
+		}
+
+		/* ============================================================
+		   CUSTOM LIGHTBOX POP-UP GALLERY (SLIDE & SWIPE)
+		   ============================================================ */
+		#custom-lightbox {
+			position: fixed !important;
+			top: 0 !important;
+			left: 0 !important;
+			width: 100vw !important;
+			height: 100vh !important;
+			background-color: rgba(15, 15, 15, 0.95) !important;
+			z-index: 999999 !important;
+			display: none;
+			align-items: center !important;
+			justify-content: center !important;
+			backdrop-filter: blur(8px) !important;
+			-webkit-backdrop-filter: blur(8px) !important;
+			font-family: 'Poppins', sans-serif !important;
+			touch-action: none;
+		}
+		#custom-lightbox-img {
+			max-width: 90% !important;
+			max-height: 80% !important;
+			object-fit: contain !important;
+			border-radius: 6px !important;
+			box-shadow: 0 10px 40px rgba(0,0,0,0.8) !important;
+			border: 2px solid rgba(255,255,255,0.1) !important;
+			user-select: none !important;
+			-webkit-user-drag: none !important;
+			transition: opacity 0.3s ease, transform 0.3s ease !important;
+		}
+		.lightbox-counter {
+			position: absolute !important;
+			top: 25px !important;
+			left: 25px !important;
+			color: rgba(255,255,255,0.8) !important;
+			font-size: 15px !important;
+			font-weight: 500 !important;
+			letter-spacing: 1px !important;
+			z-index: 1000000 !important;
+		}
+		.lightbox-controls {
+			position: absolute !important;
+			top: 25px !important;
+			right: 25px !important;
+			display: flex !important;
+			gap: 20px !important;
+			z-index: 1000000 !important;
+		}
+		.lightbox-control-btn {
+			color: rgba(255,255,255,0.8) !important;
+			font-size: 22px !important;
+			cursor: pointer !important;
+			transition: color 0.2s, transform 0.2s !important;
+			background: none !important;
+			border: none !important;
+			padding: 0 !important;
+		}
+		.lightbox-control-btn:hover {
+			color: #ffffff !important;
+			transform: scale(1.1) !important;
+		}
+		.lightbox-arrow {
+			position: absolute !important;
+			top: 50% !important;
+			transform: translateY(-50%) !important;
+			color: rgba(255,255,255,0.6) !important;
+			font-size: 45px !important;
+			cursor: pointer !important;
+			padding: 20px !important;
+			user-select: none !important;
+			transition: color 0.2s, transform 0.2s !important;
+			z-index: 1000000 !important;
+			background: none !important;
+			border: none !important;
+		}
+		.lightbox-arrow:hover {
+			color: #ffffff !important;
+			transform: translateY(-50%) scale(1.15) !important;
+		}
+		.lightbox-arrow-left {
+			left: 15px !important;
+		}
+		.lightbox-arrow-right {
+			right: 15px !important;
+		}
+		.lightbox-caption {
+			position: absolute !important;
+			bottom: 30px !important;
+			left: 0 !important;
+			width: 100% !important;
+			text-align: center !important;
+			color: rgba(255,255,255,0.9) !important;
+			font-size: 15px !important;
+			font-weight: 400 !important;
+			letter-spacing: 0.5px !important;
+			z-index: 1000000 !important;
+			text-shadow: 1px 1px 3px rgba(0,0,0,0.8) !important;
+		}
+	</style>
 </head>
 
 <body
@@ -3599,7 +3808,18 @@
 		function removeOverflow() { if (lockSection) document.body.classList.remove('locked-section'); }
 		const secMotionExist = "exist"; document.querySelector('.wdp-button-wrapper').addEventListener('click', () => { btnBukaClicked() })
 		function btnBukaClicked() {
-			if (secMotionExist === "exist") { setTimeout(() => { if (selectedDataVid !== "no" && selectedDataVid !== "") document.querySelector('.motionSection .elementor-background-video-container video').play(); }, 100) }
+			if (secMotionExist === "exist") {
+				setTimeout(() => {
+					if (selectedDataVid !== "no" && selectedDataVid !== "") {
+						var vid = document.querySelector('.motionSection .elementor-background-video-container video');
+						if (vid && !vid.src) { vid.src = selectedDataVid; vid.load(); }
+						vid.play().catch(function(e) {
+							console.log('Video play failed, showing text immediately:', e);
+							document.querySelector('.motionText').style.display = "flex";
+						});
+					}
+				}, 100)
+			}
 			setTimeout(() => { document.querySelector('.motionText').style.display = "flex" }, 8500)
 		}</script>
 	<style>
@@ -3647,6 +3867,353 @@
 		data-no-optimize="1">!function (t, e) { "object" == typeof exports && "undefined" != typeof module ? module.exports = e() : "function" == typeof define && define.amd ? define(e) : (t = "undefined" != typeof globalThis ? globalThis : t || self).LazyLoad = e() }(this, function () { "use strict"; function e() { return (e = Object.assign || function (t) { for (var e = 1; e < arguments.length; e++) { var n, a = arguments[e]; for (n in a) Object.prototype.hasOwnProperty.call(a, n) && (t[n] = a[n]) } return t }).apply(this, arguments) } function i(t) { return e({}, it, t) } function o(t, e) { var n, a = "LazyLoad::Initialized", i = new t(e); try { n = new CustomEvent(a, { detail: { instance: i } }) } catch (t) { (n = document.createEvent("CustomEvent")).initCustomEvent(a, !1, !1, { instance: i }) } window.dispatchEvent(n) } function l(t, e) { return t.getAttribute(gt + e) } function c(t) { return l(t, bt) } function s(t, e) { return function (t, e, n) { e = gt + e; null !== n ? t.setAttribute(e, n) : t.removeAttribute(e) }(t, bt, e) } function r(t) { return s(t, null), 0 } function u(t) { return null === c(t) } function d(t) { return c(t) === vt } function f(t, e, n, a) { t && (void 0 === a ? void 0 === n ? t(e) : t(e, n) : t(e, n, a)) } function _(t, e) { nt ? t.classList.add(e) : t.className += (t.className ? " " : "") + e } function v(t, e) { nt ? t.classList.remove(e) : t.className = t.className.replace(new RegExp("(^|\\s+)" + e + "(\\s+|$)"), " ").replace(/^\s+/, "").replace(/\s+$/, "") } function g(t) { return t.llTempImage } function b(t, e) { !e || (e = e._observer) && e.unobserve(t) } function p(t, e) { t && (t.loadingCount += e) } function h(t, e) { t && (t.toLoadCount = e) } function n(t) { for (var e, n = [], a = 0; e = t.children[a]; a += 1)"SOURCE" === e.tagName && n.push(e); return n } function m(t, e) { (t = t.parentNode) && "PICTURE" === t.tagName && n(t).forEach(e) } function a(t, e) { n(t).forEach(e) } function E(t) { return !!t[st] } function I(t) { return t[st] } function y(t) { return delete t[st] } function A(e, t) { var n; E(e) || (n = {}, t.forEach(function (t) { n[t] = e.getAttribute(t) }), e[st] = n) } function k(a, t) { var i; E(a) && (i = I(a), t.forEach(function (t) { var e, n; e = a, (t = i[n = t]) ? e.setAttribute(n, t) : e.removeAttribute(n) })) } function L(t, e, n) { _(t, e.class_loading), s(t, ut), n && (p(n, 1), f(e.callback_loading, t, n)) } function w(t, e, n) { n && t.setAttribute(e, n) } function x(t, e) { w(t, ct, l(t, e.data_sizes)), w(t, rt, l(t, e.data_srcset)), w(t, ot, l(t, e.data_src)) } function O(t, e, n) { var a = l(t, e.data_bg_multi), i = l(t, e.data_bg_multi_hidpi); (a = at && i ? i : a) && (t.style.backgroundImage = a, n = n, _(t = t, (e = e).class_applied), s(t, ft), n && (e.unobserve_completed && b(t, e), f(e.callback_applied, t, n))) } function N(t, e) { !e || 0 < e.loadingCount || 0 < e.toLoadCount || f(t.callback_finish, e) } function C(t, e, n) { t.addEventListener(e, n), t.llEvLisnrs[e] = n } function M(t) { return !!t.llEvLisnrs } function z(t) { if (M(t)) { var e, n, a = t.llEvLisnrs; for (e in a) { var i = a[e]; n = e, i = i, t.removeEventListener(n, i) } delete t.llEvLisnrs } } function R(t, e, n) { var a; delete t.llTempImage, p(n, -1), (a = n) && --a.toLoadCount, v(t, e.class_loading), e.unobserve_completed && b(t, n) } function T(o, r, c) { var l = g(o) || o; M(l) || function (t, e, n) { M(t) || (t.llEvLisnrs = {}); var a = "VIDEO" === t.tagName ? "loadeddata" : "load"; C(t, a, e), C(t, "error", n) }(l, function (t) { var e, n, a, i; n = r, a = c, i = d(e = o), R(e, n, a), _(e, n.class_loaded), s(e, dt), f(n.callback_loaded, e, a), i || N(n, a), z(l) }, function (t) { var e, n, a, i; n = r, a = c, i = d(e = o), R(e, n, a), _(e, n.class_error), s(e, _t), f(n.callback_error, e, a), i || N(n, a), z(l) }) } function G(t, e, n) { var a, i, o, r, c; t.llTempImage = document.createElement("IMG"), T(t, e, n), E(c = t) || (c[st] = { backgroundImage: c.style.backgroundImage }), o = n, r = l(a = t, (i = e).data_bg), c = l(a, i.data_bg_hidpi), (r = at && c ? c : r) && (a.style.backgroundImage = 'url("'.concat(r, '")'), g(a).setAttribute(ot, r), L(a, i, o)), O(t, e, n) } function D(t, e, n) { var a; T(t, e, n), a = e, e = n, (t = It[(n = t).tagName]) && (t(n, a), L(n, a, e)) } function V(t, e, n) { var a; a = t, (-1 < yt.indexOf(a.tagName) ? D : G)(t, e, n) } function F(t, e, n) { var a; t.setAttribute("loading", "lazy"), T(t, e, n), a = e, (e = It[(n = t).tagName]) && e(n, a), s(t, vt) } function j(t) { t.removeAttribute(ot), t.removeAttribute(rt), t.removeAttribute(ct) } function P(t) { m(t, function (t) { k(t, Et) }), k(t, Et) } function S(t) { var e; (e = At[t.tagName]) ? e(t) : E(e = t) && (t = I(e), e.style.backgroundImage = t.backgroundImage) } function U(t, e) { var n; S(t), n = e, u(e = t) || d(e) || (v(e, n.class_entered), v(e, n.class_exited), v(e, n.class_applied), v(e, n.class_loading), v(e, n.class_loaded), v(e, n.class_error)), r(t), y(t) } function $(t, e, n, a) { var i; n.cancel_on_exit && (c(t) !== ut || "IMG" === t.tagName && (z(t), m(i = t, function (t) { j(t) }), j(i), P(t), v(t, n.class_loading), p(a, -1), r(t), f(n.callback_cancel, t, e, a))) } function q(t, e, n, a) { var i, o, r = (o = t, 0 <= pt.indexOf(c(o))); s(t, "entered"), _(t, n.class_entered), v(t, n.class_exited), i = t, o = a, n.unobserve_entered && b(i, o), f(n.callback_enter, t, e, a), r || V(t, n, a) } function H(t) { return t.use_native && "loading" in HTMLImageElement.prototype } function B(t, i, o) { t.forEach(function (t) { return (a = t).isIntersecting || 0 < a.intersectionRatio ? q(t.target, t, i, o) : (e = t.target, n = t, a = i, t = o, void (u(e) || (_(e, a.class_exited), $(e, n, a, t), f(a.callback_exit, e, n, t)))); var e, n, a }) } function J(e, n) { var t; et && !H(e) && (n._observer = new IntersectionObserver(function (t) { B(t, e, n) }, { root: (t = e).container === document ? null : t.container, rootMargin: t.thresholds || t.threshold + "px" })) } function K(t) { return Array.prototype.slice.call(t) } function Q(t) { return t.container.querySelectorAll(t.elements_selector) } function W(t) { return c(t) === _t } function X(t, e) { return e = t || Q(e), K(e).filter(u) } function Y(e, t) { var n; (n = Q(e), K(n).filter(W)).forEach(function (t) { v(t, e.class_error), r(t) }), t.update() } function t(t, e) { var n, a, t = i(t); this._settings = t, this.loadingCount = 0, J(t, this), n = t, a = this, Z && window.addEventListener("online", function () { Y(n, a) }), this.update(e) } var Z = "undefined" != typeof window, tt = Z && !("onscroll" in window) || "undefined" != typeof navigator && /(gle|ing|ro)bot|crawl|spider/i.test(navigator.userAgent), et = Z && "IntersectionObserver" in window, nt = Z && "classList" in document.createElement("p"), at = Z && 1 < window.devicePixelRatio, it = { elements_selector: ".lazy", container: tt || Z ? document : null, threshold: 300, thresholds: null, data_src: "src", data_srcset: "srcset", data_sizes: "sizes", data_bg: "bg", data_bg_hidpi: "bg-hidpi", data_bg_multi: "bg-multi", data_bg_multi_hidpi: "bg-multi-hidpi", data_poster: "poster", class_applied: "applied", class_loading: "litespeed-loading", class_loaded: "litespeed-loaded", class_error: "error", class_entered: "entered", class_exited: "exited", unobserve_completed: !0, unobserve_entered: !1, cancel_on_exit: !0, callback_enter: null, callback_exit: null, callback_applied: null, callback_loading: null, callback_loaded: null, callback_error: null, callback_finish: null, callback_cancel: null, use_native: !1 }, ot = "src", rt = "srcset", ct = "sizes", lt = "poster", st = "llOriginalAttrs", ut = "loading", dt = "loaded", ft = "applied", _t = "error", vt = "native", gt = "data-", bt = "ll-status", pt = [ut, dt, ft, _t], ht = [ot], mt = [ot, lt], Et = [ot, rt, ct], It = { IMG: function (t, e) { m(t, function (t) { A(t, Et), x(t, e) }), A(t, Et), x(t, e) }, IFRAME: function (t, e) { A(t, ht), w(t, ot, l(t, e.data_src)) }, VIDEO: function (t, e) { a(t, function (t) { A(t, ht), w(t, ot, l(t, e.data_src)) }), A(t, mt), w(t, lt, l(t, e.data_poster)), w(t, ot, l(t, e.data_src)), t.load() } }, yt = ["IMG", "IFRAME", "VIDEO"], At = { IMG: P, IFRAME: function (t) { k(t, ht) }, VIDEO: function (t) { a(t, function (t) { k(t, ht) }), k(t, mt), t.load() } }, kt = ["IMG", "IFRAME", "VIDEO"]; return t.prototype = { update: function (t) { var e, n, a, i = this._settings, o = X(t, i); { if (h(this, o.length), !tt && et) return H(i) ? (e = i, n = this, o.forEach(function (t) { -1 !== kt.indexOf(t.tagName) && F(t, e, n) }), void h(n, 0)) : (t = this._observer, i = o, t.disconnect(), a = t, void i.forEach(function (t) { a.observe(t) })); this.loadAll(o) } }, destroy: function () { this._observer && this._observer.disconnect(), Q(this._settings).forEach(function (t) { y(t) }), delete this._observer, delete this._settings, delete this.loadingCount, delete this.toLoadCount }, loadAll: function (t) { var e = this, n = this._settings; X(t, n).forEach(function (t) { b(t, e), V(t, n, e) }) }, restoreAll: function () { var e = this._settings; Q(e).forEach(function (t) { U(t, e) }) } }, t.load = function (t, e) { e = i(e); V(t, e) }, t.resetStatus = function (t) { r(t) }, Z && function (t, e) { if (e) if (e.length) for (var n, a = 0; n = e[a]; a += 1)o(t, n); else o(t, e) }(t, window.lazyLoadOptions), t }); !function (e, t) { "use strict"; function a() { t.body.classList.add("litespeed_lazyloaded") } function n() { console.log("[LiteSpeed] Start Lazy Load Images"), d = new LazyLoad({ elements_selector: "[data-lazyloaded]", callback_finish: a }), o = function () { d.update() }, e.MutationObserver && new MutationObserver(o).observe(t.documentElement, { childList: !0, subtree: !0, attributes: !0 }) } var d, o; e.addEventListener ? e.addEventListener("load", n, !1) : e.attachEvent("onload", n) }(window, document);</script>
 	<script data-optimized="1" type="text/javascript"
 		src="https://webinvite.id/wp-content/litespeed/js/bd0e9caeacde6939bade1e6deff12216.js?ver=bd02f"></script>
+	<script data-optimized="1" type="text/javascript"
+		src="https://webinvite.id/wp-content/litespeed/js/bd0e9caeacde6939bade1e6deff12216.js?ver=bd02f"></script>
+
+<!-- FIX KOMPREHENSIF: Menangani semua masalah tanpa bergantung pada Elementor JS eksternal -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+
+	/* ===== FIX 1: UNHIDE SEMUA ELEMEN ELEMENTOR-INVISIBLE ===== */
+	/* elementor-invisible disembunyikan oleh Elementor JS untuk animasi masuk.
+	   Tanpa Elementor JS yang berjalan, elemen ini tetap tersembunyi selamanya. */
+	setTimeout(function() {
+		var invisibleEls = document.querySelectorAll('.elementor-invisible');
+		invisibleEls.forEach(function(el) {
+			el.classList.remove('elementor-invisible');
+			el.style.opacity = '1';
+			el.style.visibility = 'visible';
+			el.style.animation = 'none';
+		});
+	}, 500);
+
+	/* ===== FIX 2: COUNTDOWN TIMER MANUAL ===== */
+	/* Elementor countdown butuh JS khusus untuk mengisi digit days/hours/minutes/seconds */
+	var countdownEl = document.querySelector('.elementor-countdown-wrapper');
+	if (countdownEl) {
+		var targetTimestamp = parseInt(countdownEl.getAttribute('data-date')) * 1000;
+		function updateCountdown() {
+			var now = Date.now();
+			var diff = targetTimestamp - now;
+			if (diff < 0) diff = 0;
+			var days    = Math.floor(diff / (1000 * 60 * 60 * 24));
+			var hours   = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+			var minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+			var seconds = Math.floor((diff % (1000 * 60)) / 1000);
+			var daysEl = countdownEl.querySelector('.elementor-countdown-days');
+			var hoursEl = countdownEl.querySelector('.elementor-countdown-hours');
+			var minsEl = countdownEl.querySelector('.elementor-countdown-minutes');
+			var secsEl = countdownEl.querySelector('.elementor-countdown-seconds');
+			if (daysEl) daysEl.textContent = String(days).padStart(2, '0');
+			if (hoursEl) hoursEl.textContent = String(hours).padStart(2, '0');
+			if (minsEl) minsEl.textContent = String(minutes).padStart(2, '0');
+			if (secsEl) secsEl.textContent = String(seconds).padStart(2, '0');
+		}
+		updateCountdown();
+		setInterval(updateCountdown, 1000);
+	}
+
+	/* ===== FIX 3: LAZY LOAD GAMBAR DARI WEBINVITE.ID ===== */
+	/* Gambar-gambar dekorasi dari webinvite.id menggunakan data-src.
+	   Load langsung tanpa menunggu IntersectionObserver. */
+	function loadAllLazyImages() {
+		var lazyImgs = document.querySelectorAll('img[data-src]');
+		lazyImgs.forEach(function(img) {
+			var dataSrc = img.getAttribute('data-src');
+			if (dataSrc && dataSrc !== img.src) {
+				img.src = dataSrc;
+				var srcset = img.getAttribute('data-srcset');
+				if (srcset) img.srcset = srcset;
+				var sizes = img.getAttribute('data-sizes');
+				if (sizes) img.sizes = sizes;
+			}
+		});
+		/* Fix background-image lazy load */
+		var lazyBgs = document.querySelectorAll('[data-bg]');
+		lazyBgs.forEach(function(el) {
+			var bg = el.getAttribute('data-bg');
+			if (bg && !el.style.backgroundImage) {
+				el.style.backgroundImage = 'url("' + bg + '")';
+			}
+		});
+	}
+	loadAllLazyImages();
+	/* Jalankan lagi setelah semua script selesai */
+	setTimeout(loadAllLazyImages, 1500);
+
+	/* ===== FIX 4: GALLERY ITEMS - PASTIKAN TERLIHAT ===== */
+	/* e-gallery-item kadang disembunyikan sampai Elementor Gallery JS init */
+	var galleryItems = document.querySelectorAll('.e-gallery-item');
+	galleryItems.forEach(function(item) {
+		item.style.opacity = '1';
+		item.style.visibility = 'visible';
+	});
+
+	/* ===== FIX 5: CAROUSEL SWIPER FALLBACK ===== */
+	/* Jika Swiper JS belum load, tampilkan semua slide */
+	var swiperWrappers = document.querySelectorAll('.swiper-wrapper');
+	swiperWrappers.forEach(function(wrapper) {
+		if (!wrapper.style.transform) {
+			/* Belum di-init Swiper, buat tampil horizontal scroll sederhana */
+			wrapper.style.display = 'flex';
+			if (!wrapper.closest('.elementor-element-0d2140a')) {
+				wrapper.style.overflowX = 'auto';
+			} else {
+				wrapper.style.overflowX = 'hidden';
+			}
+			wrapper.style.gap = '4px';
+		}
+	});
+
+	/* ===== FIX 6: YOUTUBE VIDEO DI OUR GALLERY ===== */
+	/* Elementor Video widget butuh JS untuk inject iframe YouTube.
+	   Kita inject manual dari data-settings. */
+	var videoWidgets = document.querySelectorAll('.elementor-widget-video');
+	videoWidgets.forEach(function(widget) {
+		var videoDiv = widget.querySelector('.elementor-video');
+		if (videoDiv && videoDiv.children.length === 0) {
+			try {
+				var settingsStr = widget.getAttribute('data-settings') || '{}';
+				var settings = JSON.parse(settingsStr.replace(/&quot;/g, '"'));
+				var youtubeUrl = settings.youtube_url || '';
+				if (youtubeUrl) {
+					/* Ambil video ID dari URL YouTube */
+					var videoId = '';
+					var match = youtubeUrl.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/))([^?&\s]+)/);
+					if (match) videoId = match[1];
+					if (videoId) {
+						var params = 'autoplay=1&mute=1&loop=1&playlist=' + videoId + '&controls=1&rel=0';
+						var iframe = document.createElement('iframe');
+						iframe.src = 'https://www.youtube.com/embed/' + videoId + '?' + params;
+						iframe.style.cssText = 'width:100%;height:300px;border:none;display:block;';
+						iframe.setAttribute('allowfullscreen', '');
+						iframe.setAttribute('allow', 'autoplay; fullscreen');
+						videoDiv.appendChild(iframe);
+					}
+				}
+			} catch(e) { console.log('YouTube fix error:', e); }
+		}
+	});
+
+	/* ===== FIX 7: FORCE HEIGHT PADA GALLERY IMAGES ===== */
+	/* Gallery images butuh padding-bottom untuk rasio aspek tertentu.
+	   CSS variables tidak ter-set karena Elementor JS tidak jalan. */
+	setTimeout(function() {
+		/* Our Gallery (b6f6ff8) - aspect ratio 9:16 */
+		var ourGalleryContainer = document.querySelector('.elementor-element-b6f6ff8 .elementor-gallery__container');
+		if (ourGalleryContainer) {
+			ourGalleryContainer.style.display = 'grid';
+			ourGalleryContainer.style.gridTemplateColumns = 'repeat(2, 1fr)';
+			ourGalleryContainer.style.gap = '4px';
+			var items = ourGalleryContainer.querySelectorAll('.e-gallery-image');
+			items.forEach(function(img) {
+				if (!img.style.paddingBottom || img.style.paddingBottom === '0px') {
+					img.style.paddingBottom = '177.78%';
+				}
+			});
+		}
+		/* Hashtag Gallery (8540e43) - aspect ratio 1:1 */
+		var hashtagContainer = document.querySelector('.elementor-element-8540e43 .elementor-gallery__container');
+		if (hashtagContainer) {
+			hashtagContainer.style.display = 'grid';
+			hashtagContainer.style.gridTemplateColumns = '1fr';
+			var hashItems = hashtagContainer.querySelectorAll('.e-gallery-image');
+			hashItems.forEach(function(img) {
+				if (!img.style.paddingBottom || img.style.paddingBottom === '0px') {
+					img.style.paddingBottom = '100%';
+				}
+			});
+		}
+	}, 300);
+
+	/* ===== FIX 8: AUTO-SLIDE CAROUSEL 3 FOTO ===== */
+	/* Carousel di bawah countdown: 3 foto terlihat, geser tiap 2 detik, loop */
+	setTimeout(function() {
+		var carouselWrapper = document.querySelector('.elementor-element-0d2140a .swiper-wrapper');
+		if (!carouselWrapper) return;
+
+		var slides = carouselWrapper.querySelectorAll('.swiper-slide');
+		if (slides.length < 2) return;
+
+		function slideNext() {
+			var firstSlide = carouselWrapper.querySelector('.swiper-slide');
+			if (!firstSlide) return;
+
+			var slideWidth = firstSlide.offsetWidth;
+			var gap = 4; // margin-right 4px
+			var totalShift = slideWidth + gap;
+
+			/* Animasikan margin-left slide pertama ke kiri */
+			firstSlide.style.setProperty('transition', 'margin-left 0.5s ease-in-out', 'important');
+			firstSlide.style.setProperty('margin-left', '-' + totalShift + 'px', 'important');
+
+			/* Setelah animasi selesai, kembalikan margin-left ke 0 dan pindahkan slide pertama ke akhir */
+			setTimeout(function() {
+				firstSlide.style.setProperty('transition', 'none', 'important');
+				firstSlide.style.setProperty('margin-left', '0px', 'important');
+				carouselWrapper.appendChild(firstSlide);
+			}, 500);
+		}
+
+		/* Mulai interval auto-slide setiap 2 detik */
+		var autoSlideInterval = setInterval(slideNext, 2000);
+		carouselWrapper._autoSlide = autoSlideInterval;
+
+	}, 400);
+
+	/* ===== FIX 9: CUSTOM LIGHTBOX POP-UP GALLERY ===== */
+	/* Intercept gallery clicks to open custom modal instead of opening image files directly */
+	(function() {
+		var galleryLinks = document.querySelectorAll('.elementor-element-b6f6ff8 .e-gallery-item, .elementor-element-8540e43 .e-gallery-item');
+		if (galleryLinks.length === 0) return;
+
+		var slides = [];
+		galleryLinks.forEach(function(link, index) {
+			var imgUrl = link.getAttribute('href');
+			var titleAttr = link.getAttribute('data-elementor-lightbox-title');
+			var imgEl = link.querySelector('.e-gallery-image');
+			var labelAttr = imgEl ? imgEl.getAttribute('aria-label') : '';
+			var title = titleAttr || labelAttr || 'Melisa & Deny';
+			slides.push({ url: imgUrl, title: title });
+
+			/* Override click event */
+			link.addEventListener('click', function(e) {
+				e.preventDefault();
+				openLightbox(index);
+			});
+		});
+
+		var currentLightboxIndex = 0;
+		var zoomScale = 1;
+		var lightbox = document.getElementById('custom-lightbox');
+		var lightboxImg = document.getElementById('custom-lightbox-img');
+		var counterVal = document.getElementById('lightbox-counter-val');
+		var captionVal = document.getElementById('lightbox-caption-val');
+
+		function openLightbox(index) {
+			currentLightboxIndex = index;
+			zoomScale = 1;
+			updateLightboxContent();
+			lightbox.style.display = 'flex';
+			document.body.style.overflow = 'hidden'; /* lock scroll when lightbox is open */
+		}
+
+		function closeLightbox() {
+			lightbox.style.display = 'none';
+			/* Restore overflow state */
+			var cover = document.getElementById('new-cover-page');
+			if (!cover) {
+				document.body.style.overflow = 'auto';
+			}
+		}
+
+		function updateLightboxContent() {
+			var slide = slides[currentLightboxIndex];
+			if (!slide) return;
+
+			/* Fade out image briefly then fade in new image */
+			lightboxImg.style.opacity = '0';
+			lightboxImg.style.transform = 'scale(0.95)';
+			
+			setTimeout(function() {
+				lightboxImg.src = slide.url;
+				lightboxImg.onload = function() {
+					lightboxImg.style.opacity = '1';
+					lightboxImg.style.transform = 'scale(' + zoomScale + ')';
+				};
+				counterVal.textContent = (currentLightboxIndex + 1) + ' / ' + slides.length;
+				captionVal.textContent = slide.title;
+			}, 150);
+		}
+
+		function nextSlide() {
+			currentLightboxIndex = (currentLightboxIndex + 1) % slides.length;
+			zoomScale = 1;
+			updateLightboxContent();
+		}
+
+		function prevSlide() {
+			currentLightboxIndex = (currentLightboxIndex - 1 + slides.length) % slides.length;
+			zoomScale = 1;
+			updateLightboxContent();
+		}
+
+		/* Event listeners */
+		document.getElementById('lightbox-close-btn').addEventListener('click', closeLightbox);
+		document.getElementById('lightbox-prev-btn').addEventListener('click', prevSlide);
+		document.getElementById('lightbox-next-btn').addEventListener('click', nextSlide);
+
+		document.getElementById('lightbox-zoom-in').addEventListener('click', function() {
+			if (zoomScale < 3) {
+				zoomScale += 0.25;
+				lightboxImg.style.transform = 'scale(' + zoomScale + ')';
+			}
+		});
+
+		document.getElementById('lightbox-zoom-out').addEventListener('click', function() {
+			if (zoomScale > 0.5) {
+				zoomScale -= 0.25;
+				lightboxImg.style.transform = 'scale(' + zoomScale + ')';
+			}
+		});
+
+		/* Close on backdrop click */
+		lightbox.addEventListener('click', function(e) {
+			if (e.target === lightbox) {
+				closeLightbox();
+			}
+		});
+
+		/* Keyboard navigation */
+		document.addEventListener('keydown', function(e) {
+			if (lightbox.style.display === 'flex') {
+				if (e.key === 'ArrowRight') nextSlide();
+				else if (e.key === 'ArrowLeft') prevSlide();
+				else if (e.key === 'Escape') closeLightbox();
+			}
+		});
+
+		/* Touch gestures (Swipe Left / Swipe Right) */
+		var touchStartX = 0;
+		var touchEndX = 0;
+		lightbox.addEventListener('touchstart', function(e) {
+			touchStartX = e.changedTouches[0].screenX;
+		}, {passive: true});
+
+		lightbox.addEventListener('touchend', function(e) {
+			touchEndX = e.changedTouches[0].screenX;
+			handleSwipe();
+		}, {passive: true});
+
+		function handleSwipe() {
+			var threshold = 50; /* minimum distance for swipe */
+			if (touchEndX < touchStartX - threshold) {
+				/* swiped left -> next slide */
+				nextSlide();
+			} else if (touchEndX > touchStartX + threshold) {
+				/* swiped right -> prev slide */
+				prevSlide();
+			}
+		}
+
+	})();
+
+});
+</script>
+<!-- CUSTOM LIGHTBOX POP-UP DOM -->
+<div id="custom-lightbox">
+	<div class="lightbox-counter" id="lightbox-counter-val">1 / 1</div>
+	<div class="lightbox-controls">
+		<button class="lightbox-control-btn" id="lightbox-zoom-out" title="Zoom Out">🔍−</button>
+		<button class="lightbox-control-btn" id="lightbox-zoom-in" title="Zoom In">🔍+</button>
+		<button class="lightbox-control-btn" id="lightbox-close-btn" title="Close">✕</button>
+	</div>
+	<button class="lightbox-arrow lightbox-arrow-left" id="lightbox-prev-btn">‹</button>
+	<img id="custom-lightbox-img" src="" alt="Gallery Image">
+	<button class="lightbox-arrow lightbox-arrow-right" id="lightbox-next-btn">›</button>
+	<div class="lightbox-caption" id="lightbox-caption-val">Image Caption</div>
+</div>
+
 <!-- START NEW CLEAN COVER PAGE -->
 <div id="new-cover-page" style="position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background-image: url('./Foto-Video-Compressed/4.jpeg'); background-size: cover; background-position: center; z-index: 99999; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; text-align: center; padding-bottom: 7vh;">
     <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 50vh; background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.45) 40%, rgba(255, 255, 255, 0.85) 100%); z-index: 1;"></div>
